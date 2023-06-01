@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 import * as openai from 'openai';
+import * as fs from 'fs';
+import path = require('path');
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
   _view?: vscode.WebviewView;
@@ -43,6 +45,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         }
         case 'getQuery': {
           if (data.value) {
+            console.log(data.value);
             this._openai
               .createChatCompletion({
                 model: 'gpt-3.5-turbo',
@@ -67,6 +70,10 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
   }
 
   private _getHtmlForWebview(webview: vscode.Webview) {
+    const htmlContent = fs.readFileSync(
+      path.resolve(this._extensionUri.fsPath, 'media', 'sidebar.html'),
+      'utf8'
+    );
     const scriptUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this._extensionUri, 'media', 'main.js')
     );
@@ -90,16 +97,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 				<link href="${styleVSCodeUri}" rel="stylesheet">
 			</head>
       <body>
-      <h1>Unit Test Automation Tool</h1>
-      <h3>Highlighted Snippet:</h3>
-      <textarea id="highlighted-text" readonly rows="10" cols="50"></textarea>
-      <h3>Testing Framework:</h3>
-      <select style="width: 100%" name="framework" id="framework">
-        <option value="PHPUnit">PHPUnit</option>
-        <option value="React Jest">React Jest</option>
-      </select>
-      <button id="fetch-btn">Generate</button>
-      <textarea id="query" readonly rows="10" cols="50"></textarea>
+      ${htmlContent}
         <script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;
