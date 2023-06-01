@@ -21,6 +21,34 @@
         }
       ]
     },
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "myextensionsubmenu",
+          "group": "navigation"
+        }
+      ],
+      "myextensionsubmenu": [
+        {
+          "command": "unit-test-automation-tool.runPhp",
+          "group": "navigation"
+        },
+        {
+          "command": "unit-test-automation-tool.runRuby",
+          "group": "navigation"
+        },
+        {
+          "command": "unit-test-automation-tool.runJs",
+          "group": "navigation"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "label": "Testing Framework",
+        "id": "myextensionsubmenu"
+      }
+    ],
     "views": {
       "unit-test-automation-tool": [
         {
@@ -36,6 +64,18 @@
       {
         "command": "unit-test-automation-tool.runUnitTest",
         "title": "Unit Test Automation Tool"
+      },
+      {
+        "command": "unit-test-automation-tool.runPhp",
+        "title": "PHP"
+      },
+      {
+        "command": "unit-test-automation-tool.runRuby",
+        "title": "Ruby"
+      },
+      {
+        "command": "unit-test-automation-tool.runJs",
+        "title": "Javascript"
       }
     ]
   },
